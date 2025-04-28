@@ -21,3 +21,10 @@ foreach(program ${PROGRAMS_LIST})
     target_link_libraries(${program_name} PUBLIC MPI::MPI_CXX)
     target_link_libraries(${program_name} PUBLIC tiledarray)
 endforeach()
+
+add_library(pauli SHARED ${CMAKE_CURRENT_SOURCE_DIR}/src/libs/pauli.cpp)
+target_link_libraries(pauli INTERFACE OpenMP::OpenMP_CXX)
+target_link_libraries(pauli PUBLIC MPI::MPI_CXX)
+target_link_libraries(pauli PUBLIC tiledarray)
+
+target_link_libraries(08-conj PRIVATE pauli)
